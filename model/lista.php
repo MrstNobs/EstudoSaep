@@ -42,5 +42,24 @@
                 return 'Erro ao excluir lista';
             }
         }
+
+
+        public function getItens($lista){
+            try{
+                $sql = "SELECT produto.codigo, produto.nome, FROM produto"
+                ."inner join iten on item.produto_codigo = produto.codigo"
+                ."where lista.codigo = ?";
+
+                $stmt = Conexao::getConexao()->prepare($sql);
+                $stmt->bindValue(1,$lista);
+                
+                $stmt->execute();
+
+                if($stmt->rowCount()>0){
+                    $result = $stmt->ftell(PDO::FETCH_BOTH);
+                    return $result;
+                }
+            }
+        }
     }
 ?>
